@@ -17,8 +17,131 @@ Mình đã tạo sẵn một project bằng `create-react-app` sau đó cấu h�
 ## Sự khác biệt giữa State và Props
 ![State vs props](https://static.wixstatic.com/media/3a60df_ecdf74102fd04ee0ab40c50ecee52020~mv2.png/v1/fit/w_800%2Ch_420%2Cal_c/file.png)
 
+Cách sử dụng state trong class component và function component
+```jsx
+// Class component
+class App extends Component {
+    constructor() {
+        super();
+
+        // Khai báo state
+        this.state = {
+            x: false
+        };
+    }
+
+    componentDidMount() {
+        // Cách cập nhật state trong class component
+        this.setState({
+            x: true
+        })
+    }
+}
+
+// Function component
+import React, {useEffect, useState} from "react";
+
+function App() {
+    // Khai báo state cho x, giá trị thứ 2 "setX" có thể đặt tên bất kỳ, nhưng thông thường người ta hay đặt tên với tiền tố "set" ở trước
+    const [x, setX] = useState(false)
+
+    // ~ componentDidMount
+    useEffect(() => {
+        // Cập nhật state cho x
+        setX(true);
+    }, [])
+}
+```
+
+Cách sử dụng props trong class component và function component đều giống nhau:
+```jsx
+// Ví dụ ta có một component "App" ở trên thì ta sử dụng và truyền props như sau:
+<App propName1={true} propName2="hehe" />
+```
+
 ## Life cycle trong Reactjs
 ![Life cycle](https://i1.wp.com/programmingwithmosh.com/wp-content/uploads/2018/10/Screen-Shot-2018-10-31-at-1.44.28-PM.png?ssl=1)
 
-### Life cycle React class to Function component
+**Ví dụ về life cycle trong Class component**
+```jsx
+class App extends Component {
+    constructor() {
+        super();
+
+        this.state = {x: false};
+    }
+
+    componentWillMount() {
+
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return true;
+    }
+
+    componentDidCatch(error, errorInfo) {
+
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    render() {
+        return (
+            <div>Hello</div>
+        )
+    }
+}
+```
+
+### Cách ánh xạ Life cycle từ React class qua Function component
 ![Life cycle React class to Function component](https://miro.medium.com/max/651/1*IeEZWbiknyh0zP3a1_jHkA.jpeg)
+
+**Ví dụ về life cycle trong function component**
+```jsx
+function App() {
+    const [a, setA] = useState(false)
+
+    // ~ componentDidMount
+    useEffect(() => {
+
+    }, [])
+
+    // ~ componentDidUpdate
+    useEffect(() => {
+
+    }, [a])
+
+    // ~ componentWillUnmount
+    useEffect(() => {
+        return () => {
+            // will unmount            
+        }
+    }, [])
+
+    return (
+        <div>Hello</div>
+    )
+}
+```
+
+## Bắt các sự kiện trong Reactjs
+Việc bắt sự kiện trong React rất đơn giản, giống như cách bắt sự kiện trong Javascript
+
+```jsx
+// Ví dụ bắt sự kiện click vào một button
+<button onClick={() => onClickButton}>Hello</button>
+
+// Ví dụ bắt sự kiện change của một input
+<input onChange={() => onchangeInput}/>
+```
+
